@@ -1,0 +1,26 @@
+{% extends 'forumestc/base.html' %} {% block body %} {% load static %} {% load crispy_forms_tags %} s
+</br>
+<div class="row">
+    <div class="col">
+    </div>
+
+    <div class="col-8">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Home / Se connceter</li>
+            </ol>
+        </nav>
+        <h1>Log in</h1>
+        <form class="site-form" action="{% url 'forumestc:log_in' %}" method="post">{% csrf_token %} 
+            {{ form|crispy }}
+             {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{ request.GET.next }}" /> {% endif %}
+            <button type="submit" class="btn btn-primary">Se Connecter</button>
+        </form>
+        <p>Not got an account? <a href="{% url 'forumestc:sign_up' %}">Sign Up</a></p>
+    </div>
+
+    <div class="col">
+    </div>
+</div>
+{% endblock %}

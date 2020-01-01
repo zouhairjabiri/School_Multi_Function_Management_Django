@@ -1,0 +1,91 @@
+{% extends 'forumestc/base.html' %} {% block body %} {% load static %}
+</br>
+<div class="row">
+    <div class="col-1">
+    </div>
+    <div class="col" >
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"> Home / {{ themec }}</li>
+            </ol>
+        </nav>
+
+        {% if not user.is_authenticated %}
+
+<div class="alert alert-danger" role="alert">
+  Veuillez connecter ou creer un compte
+</div>
+
+{% endif %}
+        <table class="table table-striped table-responsive-md btn-table">
+            <thead>
+                <tr>
+                    <th> Sujets </th>
+                    <th> Date Creation </th>
+                    <th> Voir </th>
+                </tr>
+            </thead>
+            <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+
+                        <form action="{% url 'forumestc:addsubject' themec_id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="modal-header text-center">
+                                <h4 class="modal-title w-100 font-weight-bold">vous Pouvez Ajouter Une Question Ou un Sujet </h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body mx-4">
+                                <div class="md-form">
+                                    <i class="fas fa-pencil prefix grey-text"></i>
+                                    <textarea type="text" id="form8" name="sujet" class="md-textarea form-control" rows="4"></textarea>
+                                    <label data-error="wrong" data-success="right" for="form8">Votre Sujet</label>
+                                </div>
+                            </div>
+                            <div class="modal-body mx-4">
+
+                                <label>Théme</label>
+                                <select class="browser-default custom-select mb-4">
+                                    <option value="" disabled>Choose option</option>
+                                    <option value="1">{{ themec }}</option>
+                                </select>
+                            </div>
+
+                            <div class="modal-footer d-flex justify-content-center">
+                                <button type="submit" class="btn btn-unique">Ajouter <i class="fas fa-paper-plane-o ml-1"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% if user.is_authenticated %}
+            <div class="text-center">
+                <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm">Ajouter Un Sujet</a>
+            </div>
+            {% endif %}
+            <tbody>
+                {% for sujet in sujets%}
+                <tr>
+                    {% if sujet.valider == 1 %}
+                    <td>{{ sujet.subject }}</td>
+                    <td>
+                        {{ sujet.created_at }}
+                    </td>
+                    <td>
+                        <form action="{% url 'forumestc:reponse' sujet.id %}" method="POST">
+                            {% csrf_token %} {% csrf_token %}
+                            <button type="submit" class="btn btn-teal btn-rounded btn-sm m-0">consulter</button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        <div class="col-1">
+    </div>
+</div>
+{% endblock %}

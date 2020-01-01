@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+
+    <title> {{ titre }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>EST_CASABLANCA</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{% static 'img/icon.png' %}" />
+        <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+</head>
+<style type="text/css">
+
+td,h1,p,body{
+          font-family: 'Quicksand', sans-serif;
+}
+</style>
+<body>
+    <header>
+        <img src="{% static 'img/banner.png' %}" width="1500px">
+        <nav class="navbar navbar-expand-lg indigo navbar-dark red">
+            <div class="container">
+                <a class="navbar-brand" style="padding-right:20px;" href="{% url 'plateformetudiant:home' %}"><i class="fas fa-school"></i>&nbsp&nbsp&nbsp<strong>EST CASABLANCA</strong></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto" style="margin-left: 128px;">
+                        <li class="nav-item ">
+                            <a class="nav-link" href="{% url 'plateformetudiant:home' %}">ACCUEIL <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'plateformetudiant:motdudirecteur' %}">PRESENTATION  </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'plateformetudiant:evenements' %}">EVENEMENT</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'forumestc:forum_home' %}">FORUM</a>
+                        </li>
+                        {% if user.is_authenticated %}
+
+                        <li class="nav-item dropdown" style="    margin-left: 130px;margin-right: 18px;">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user"></i> Profile </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+                                <a class="dropdown-item" href="{% url 'forumestc:moncompte' user.id%}">
+                                    <button type="submit" class="btn btn-success" style="width: 177px;">mon compte</button>
+                                </a>
+                                <a class="dropdown-item">
+                                    <form class="logout-link" action="{% url 'forumestc:log_out' %}" method="post" style="width: 13rem;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Se Deconnecter</button>
+                                    </form>
+                                </a>
+                            </div>
+                        </li>
+                     
+                        <div class="avatar mx-auto">
+                         <img src="{{compte.img.url }}" href="{% url 'forumestc:moncompte' user.id%}" class="rounded-circle z-depth-1" alt="Sample avatar" height="40px" width="40px">
+                        </div>
+                           <a href="{% url 'forumestc:moncompte' user.id%}" class="white-text">
+                              <h6 class="font-weight-bold mb-3" style="margin-top: 6px;margin-left: 10px;">{{ compte.User.username}}</h6>
+                        </a>
+                        {% else %}
+                        <li class="nav-item dropdown" style="margin-left: 235px;">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user"></i> Profile </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+                                <a class="dropdown-item" href="{% url 'forumestc:log_in' %}">Se connecter</a>
+                                <a class="dropdown-item" href="{% url 'forumestc:sign_up' %}">Creer Un Compte</a>
+                            </div>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+        </nav>
+        <div class="view intro-2" style="background-image: url({% static 'img/ll.png' %});">
+            <div class="full-bg-img">
+                <div class="mask rgba-black-strong flex-center">
+                    <div class="container">
+                            <div class="white-text text-center wow fadeInUp">
+                            <h1 style="    font-family: 'Quicksand', sans-serif;   font-size: 80px;margin-top: -112px;}"><strong>Bienvenue Dans Votre Forum</strong> </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+
+    {% block body %} {% endblock %}
+
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/mdb.js' %}"></script>
+</body>
+
+</html>
